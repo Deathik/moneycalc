@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+
+{% if blog_posts %}
+    {% for post in blog_posts%}
+        <article class="col-md-8">
+            <h1>{{ post.title }}</h1>
+            <h6>publicated: {{ post.pub_date }}</h6>
+            {% if post.pub_date != post.last_modified %}
+                <h6>edited: {{ post.last_modified }}</h6>
+            {% endif %}
+            <p>{{ post.text }}</p>
+        </article>
+    {% endfor %}
+{% else %}
+    <article class="col-md-8">
+        <h1>There is no posts here</h1>
+    </article>
+{% endif %}
+
+{% endblock %}

@@ -1,13 +1,99 @@
-<!DOCTYPE html>
-<head>
-    <title>Budget</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}MyBudget{% endblock %}
+
+{% block content %}
+
     <h3>User: {{ request.user }}</h3>
     <h3>Your budget: {{ budget }}</h3>
-    <form method="post" action="{%url 'calculator:index'%}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type='submit'>
-    </form>
-</body>
+    <div class="row" style="margin-bottom: 15px;">
+    <div class="col-md-4 col-md-offset-1">
+        <h3>Income:</h3>
+        <form method="post" action="{%url 'calculator:add_budget'%}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for='id_value'>Value:</label>
+                <input class="form-control" id='id_value' name='value' type="number" value="0" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for='id_category'>Category:</label>
+                <select class="form-control" id="id_category" name="category" required>
+                    <option value="SL">Salary</option>
+                    <option value="DP">Deposit</option>
+                    <option value="OT">Other</option>
+                </select>
+            </div>
+            <button type='submit' class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <div class="col-md-4 col-md-offset-1">
+        <h3>Expenses:</h3>
+        <form method="post" action="{%url 'calculator:del_budget'%}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for='id_value'>Value:</label>
+                <input class="form-control" id='id_value' name="value" type="number" value="0" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for='id_category'>Category:</label>
+                <select class="form-control" id="id_category" name="category" required>
+                    <option value="FD">Food</option>
+                    <option value="CL">Clothes</option>
+                    <option value="EN">Entertainment</option>
+                    <option value="BL">Bills</option>
+                    <option value="OT">Other</option>
+                </select>
+            </div>
+            <button type='submit' class="btn btn-primary">Submit</button>
+        </form>
+        </div>
+        </div>
+    <div class="row">
+    {% if income %}
+    <table class="table table-hover">
+        <caption>Income</caption>
+        <thead>
+            <tr>
+                <th>Value</th>
+                <th>Category</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        {% for inc in income %}
+            <tr>
+                <th>{{ inc.value }} </th>
+                <th>{{ inc.get_category_display }}</th>
+                <th>{{ inc.date }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    You have no income yet.
+    {% endif %}
+    <hr>
+
+    {% if income %}
+    <table class="table table-hover">
+        <caption>Expenses</caption>
+        <thead>
+            <tr>
+                <th>Value</th>
+                <th>Category</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        {% for exp in expenses %}
+            <tr>
+                <th>{{ exp.value }} </th>
+                <th>{{ exp.get_category_display }}</th>
+                <th>{{ exp.date }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    You have no expenses yet.
+    {% endif %}
+</div>
+{% endblock %}
