@@ -26,16 +26,14 @@
                 </ul>
             </div>
         </nav>
-
+        {% block content %}
         <div class="container">
             <div class="row">
-                {% block content %}
                 <div class="col-md-6">
                     <h1>You forgot to make content block</h1>
                 </div>
-                {% endblock %}
             </div>
         </div>
-
+        {% endblock %}
     </body>
 </html>

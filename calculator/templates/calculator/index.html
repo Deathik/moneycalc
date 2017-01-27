@@ -3,7 +3,7 @@
 {% block title %}MyBudget{% endblock %}
 
 {% block content %}
-
+<div class="container">
     <h3>User: {{ request.user }}</h3>
     <h3>Your budget: {{ budget }}</h3>
     <div class="row" style="margin-bottom: 15px;">
@@ -52,8 +52,8 @@
         </div>
     <div class="row">
     {% if income %}
-    <table class="table table-hover">
-        <caption>Income</caption>
+    <table class="table table-responsive table-hover">
+        <caption>Income(Last 5 changes)</caption>
         <thead>
             <tr>
                 <th>Value</th>
@@ -74,26 +74,27 @@
     {% endif %}
     <hr>
 
-    {% if income %}
-    <table class="table table-hover">
-        <caption>Expenses</caption>
-        <thead>
-            <tr>
-                <th>Value</th>
-                <th>Category</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        {% for exp in expenses %}
-            <tr>
-                <th>{{ exp.value }} </th>
-                <th>{{ exp.get_category_display }}</th>
-                <th>{{ exp.date }}</th>
-            </tr>
-        {% endfor %}
-    </table>
+    {% if expenses %}
+        <table class="table">
+            <caption>Expenses(Last 5 changes)</caption>
+            <thead>
+                <tr>
+                    <th>Value</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            {% for exp in expenses %}
+                <tr>
+                    <th>{{ exp.value }} </th>
+                    <th>{{ exp.get_category_display }}</th>
+                    <th>{{ exp.date }}</th>
+                </tr>
+            {% endfor %}
+        </table>
     {% else %}
     You have no expenses yet.
     {% endif %}
+</div>
 </div>
 {% endblock %}

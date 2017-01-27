@@ -39,6 +39,9 @@ class BudgetExpenses(models.Model):
     category = models.CharField(max_length=2, choices=category_choices)
     date = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-date']
+
 
 class BudgetIncome(models.Model):
     calculator = models.ForeignKey(Calculator, on_delete=models.CASCADE)
@@ -55,3 +58,6 @@ class BudgetIncome(models.Model):
     )
     category = models.CharField(max_length=2, choices=category_choices)
     date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-date']
