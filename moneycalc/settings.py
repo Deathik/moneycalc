@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'z@vccq+2j3*bb3o21(rnw7b+9p76$73zc-)+9rg8(!duqyk!)='
+SECRET_KEY = os.environ['MONEYCALC_PRIVATE_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['moneycalc.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['moneycalc.pp.ua', '127.0.0.1']
 
 
 # Application definition
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'moneycalc.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
