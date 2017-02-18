@@ -59,3 +59,6 @@ target/
 
 #PyCharm folder
 .idea
+
+#Settings ignore
+moneycalc/settings.py
