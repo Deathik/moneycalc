@@ -1,10 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from .models import Calculator, BudgetExpenses, BudgetIncome
-from .forms import CalculatorForm, ExpensesForm, IncomeForm
+from .forms import ExpensesForm, IncomeForm
 
 
 @login_required
@@ -21,10 +21,6 @@ def budget_edit(request):
         'expenses': expenses,
         'income': income,
         })
-
-
-def base(request):
-    return render(request, 'base.html', {})
 
 
 def add_budget(request):

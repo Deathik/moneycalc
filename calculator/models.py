@@ -21,14 +21,24 @@ class Calculator(models.Model):
         return "{}'s budget".format(self.user)
 
 
-class BudgetExpenses(models.Model):
+class BudgetAbstract(models.Model):
+    category_choices = ()
     calculator = models.ForeignKey(Calculator, on_delete=models.CASCADE)
     value = models.DecimalField(
         max_digits=10, decimal_places=2, default=0,
         validators=[
             MinValueValidator(decimal.Decimal(0.01), message="Can't be negative")
-            ]
-         )
+        ]
+    )
+    category = models.CharField(max_length=2, choices=category_choices)
+    date = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+        ordering = ['-date']
+
+
+class BudgetExpenses(BudgetAbstract):
     category_choices = (
             ('FD', 'Food'),
             ('CL', 'Clothes'),
@@ -36,28 +46,11 @@ class BudgetExpenses(models.Model):
             ('BL', 'Bills'),
             ('OT', 'Other'),
             )
-    category = models.CharField(max_length=2, choices=category_choices)
-    date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['-date']
 
 
-class BudgetIncome(models.Model):
-    calculator = models.ForeignKey(Calculator, on_delete=models.CASCADE)
-    value = models.DecimalField(
-        max_digits=10, decimal_places=2, default=0,
-        validators=[
-            MinValueValidator(decimal.Decimal(0.01), message="Can't be negative")
-            ]
-         )
+class BudgetIncome(BudgetAbstract):
     category_choices = (
         ('SL', 'Salary'),
         ('DP', 'Deposit'),
         ('OT', 'Other'),
     )
-    category = models.CharField(max_length=2, choices=category_choices)
-    date = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['-date']
