@@ -22,7 +22,6 @@ class Calculator(models.Model):
 
 
 class BudgetAbstract(models.Model):
-    category_choices = ()
     calculator = models.ForeignKey(Calculator, on_delete=models.CASCADE)
     value = models.DecimalField(
         max_digits=10, decimal_places=2, default=0,
@@ -30,7 +29,6 @@ class BudgetAbstract(models.Model):
             MinValueValidator(decimal.Decimal(0.01), message="Can't be negative")
         ]
     )
-    category = models.CharField(max_length=2, choices=category_choices)
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -46,6 +44,7 @@ class BudgetExpenses(BudgetAbstract):
             ('BL', 'Bills'),
             ('OT', 'Other'),
             )
+    category = models.CharField(max_length=2, choices=category_choices)
 
 
 class BudgetIncome(BudgetAbstract):
@@ -54,3 +53,4 @@ class BudgetIncome(BudgetAbstract):
         ('DP', 'Deposit'),
         ('OT', 'Other'),
     )
+    category = models.CharField(max_length=2, choices=category_choices)
