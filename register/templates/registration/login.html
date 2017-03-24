@@ -22,7 +22,6 @@
         {% endif %}
         <form method="post" action="">
             {% csrf_token %}
-
                 <div style="margin-bottom: 10px">
                     <div class="form-group">
                         <label for='id_username'>Username:</label>
@@ -34,8 +33,11 @@
                     </div>
                     <button type='submit' class="btn btn-primary">Submit</button>
                 </div>
-
         </form>
+        <a style="background: #DD4B39" class="btn btn-block btn-social btn-google" href="{% url "social:begin" "google-oauth2" %}">
+            <span style="color: white;" class="fa fa-google-plus"></span>
+            <span style="color: white;">Sign in with Google</span>
+        </a>
         </div>
     </div>
 

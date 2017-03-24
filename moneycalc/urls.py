@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^calculator/', include('calculator.urls')),
     url(r'^', include('register.urls')),
     url(r'^', include('blog.urls')),
+    url(r'^', include('social_django.urls', namespace='social')),
 ]
