@@ -8,4 +8,8 @@
             {{ form.as_p }}
             <input type='submit'>
         </form>
+        <a style="background: #DD4B39" class="btn btn-block btn-social btn-google" href="{% url "social:begin" "google-oauth2" %}">
+            <span style="color: white;" class="fa fa-google-plus"></span>
+            <span style="color: white;">Sign in with Google</span>
+        </a>
 {% endblock %}
