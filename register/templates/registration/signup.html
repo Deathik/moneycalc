@@ -3,13 +3,43 @@
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-        <form method="post" action="">
-            {%csrf_token %}
-            {{ form.as_p }}
-            <input type='submit'>
-        </form>
-        <a style="background: #DD4B39" class="btn btn-block btn-social btn-google" href="{% url "social:begin" "google-oauth2" %}">
-            <span style="color: white;" class="fa fa-google-plus"></span>
-            <span style="color: white;">Sign in with Google</span>
-        </a>
+    <div class="container">
+        <div align="center">
+            <div class="row">
+                <div class = "col-md-4 col-lg-offset-4">
+                    <form method="post" action="" style="margin-bottom: 5px;" class="">
+                        {%csrf_token %}
+                            <div class="form-group">
+                                <label for="id_username">Username:</label>
+                                <input class="form-control" id="id_username" maxlength="150" name="username" type="text" required="">
+                                <span class="helptext form-text text-muted"">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+                            </div>
+                        <div class="form-group">
+                            <label for="id_password1">Password:</label>
+                            <input  class="form-control" id="id_password1" name="password1" type="password" required=""></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_password2">Re-enter password:</label>
+                            <input class="form-control" id="id_password2" name="password2" type="password" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="id_email">Email address:</label>
+                            <input class="form-control" id="id_email" maxlength="254" name="email" type="email">
+                        </div>
+                        <button type='submit' class="btn btn-primary">Submit</button>
+                    </form>
+                    <hr />
+                    <a style="background: #DD4B39" class="btn btn-block btn-social btn-google" href="{% url "social:begin" "google-oauth2" %}">
+                        <span style="color: white;" class="fa fa-google-plus"></span>
+                        <span style="color: white;">Sign in with Google</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
+<p><label for="id_username">Username:</label> <input id="id_username" maxlength="150" name="username" type="text" required=""> <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span></p><p><label for="id_password1">Password1:</label> <input id="id_password1" name="password1" type="password" required=""></p>
+<p><label for="id_password2">Password2:</label> <input id="id_password2" name="password2" type="password" required=""></p>
+<p><label for="id_email">Email address:</label> <input id="id_email" maxlength="254" name="email" type="email"></p>
+<input type="submit">
