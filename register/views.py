@@ -19,7 +19,7 @@ def register_user(request):
                         form.cleaned_data['password1'],
                         )
                     user.save()
-            return render(request, 'registration/success.html', {})
+            return HttpResponseRedirect(reverse('calculator:budget_edit'))
     else:
         form = RegistrationForm()
     return render(request, 'registration/signup.html', {'form': form})
