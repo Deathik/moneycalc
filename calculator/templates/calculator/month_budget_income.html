@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<ul>
-    {% for article in object_list %}
-        <li>{{ article.calculator }}:{{ article.date }}: {{ article.value }}</li>
+{% if object_list %}
+<ol>
+    {% for income in object_list %}
+        <li>{{ income.date|date:"F Y, D d"  }} - {{ income.value }}</li>
     {% endfor %}
-</ul>
-
+</ol>
+{% endif %}
 <p>
     {% if previous_month %}
         Previous Month: {{ previous_month|date:"F Y" }}

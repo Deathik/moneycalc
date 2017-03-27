@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.views.generic.dates import MonthArchiveView, YearArchiveView
 
 from .models import Calculator, BudgetExpenses, BudgetIncome
 from .forms import ExpensesForm, IncomeForm
@@ -59,3 +60,20 @@ def del_budget(request):
     else:
         HttpResponseRedirect(reverse('calculator:budget_edit'))
     return HttpResponseRedirect(reverse('calculator:budget_edit'))
+
+
+class IncomeYear(YearArchiveView):
+    date_field = 'date'
+    template_name = 'calculator/year_budget_income.html'
+    make_object_list = True
+
+    def get_queryset(self):
+        return BudgetIncome.objects.filter(calculator__user=self.request.user.pk)
+
+
+class IncomeMonth(MonthArchiveView):
+    date_field = 'date'
+    template_name = 'calculator/month_budget_income.html'
+
+    def get_queryset(self):
+        return BudgetIncome.objects.filter(calculator__user=self.request.user.pk)
