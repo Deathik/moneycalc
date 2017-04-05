@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
-{% load tz %}
 
 {% block title %}MyBudget{% endblock %}
-
+{% block static %}<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -98,6 +97,30 @@
     {% else %}
     You have no expenses yet.
     {% endif %}
+    <div class="row">
+        <canvas id="myChart" height="100%"></canvas>
+        <script>
+            var data = {
+                labels: ["Income", "Expenses"],
+                datasets:[{
+                    data:[{{ total_inc }}, {{ total_exp }}],
+                    backgroundColor: [
+                        "#FF6384",
+                        "#36A2EB"
+                    ],
+                    hoverBackgroundColor: [
+                        "#FF6384",
+                        "#36A2EB"
+                    ]
+                }]
+            };
+            var ctx = document.getElementById('myChart');
+            var pieChart = new Chart(ctx,{
+                type: 'pie',
+                data: data
+            });
+        </script>
+    </div>
 </div>
 </div>
 {% endblock %}
