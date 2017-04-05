@@ -53,6 +53,7 @@
         </div>
         </div>
     <div class="row">
+    <div class="col-md-8">
     {% if income %}
     <table class="table table-responsive table-hover">
         <caption>Income(Last 5 changes)</caption>
@@ -97,8 +98,9 @@
     {% else %}
     You have no expenses yet.
     {% endif %}
-    <div class="row">
-        <canvas id="myChart" height="100%"></canvas>
+    </div>
+    <div class="col-md-4">
+        <canvas id="myChart"></canvas>
         <script>
             var data = {
                 labels: ["Income", "Expenses"],
