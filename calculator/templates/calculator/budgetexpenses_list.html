@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}List of Expenses{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+    {% if budgetexpenses_list %}
+     <table class="table table-responsive table-hover">
+        <caption>Expenses</caption>
+        <thead>
+            <tr>
+                <th>Value</th>
+                <th>Category</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        {% for budget in budgetexpenses_list %}
+            <tr>
+                <th>{{ budget.value }} </th>
+                <th>{{ budget.get_category_display }}</th>
+                <th>{{ budget.date }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+    <p>Total: {{ view.total_exp }}</p>
+    {% else %}
+    <h2>You have no expenses yet</h2>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

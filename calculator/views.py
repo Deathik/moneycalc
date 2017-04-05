@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic.dates import MonthArchiveView, YearArchiveView
+from django.views.generic import FormView, ListView
 
 from .models import Calculator, BudgetExpenses, BudgetIncome
 from .forms import ExpensesForm, IncomeForm
@@ -21,6 +21,8 @@ def budget_edit(request):
         'budget': calc.budget,
         'expenses': expenses,
         'income': income,
+        'total_exp': calc.total_exp,
+        'total_inc': calc.total_inc,
         })
 
 
@@ -33,7 +35,8 @@ def add_budget(request):
             changes = BudgetIncome(
                 calculator=calc,
                 value=value,
-                category=inc_form.cleaned_data.get('category'),)
+                category=inc_form.cleaned_data.get('category'),
+                )
             changes.save()
             calc.inc_budget(value)
             calc.save()
@@ -62,18 +65,19 @@ def del_budget(request):
     return HttpResponseRedirect(reverse('calculator:budget_edit'))
 
 
-class IncomeYear(YearArchiveView):
-    date_field = 'date'
-    template_name = 'calculator/year_budget_income.html'
-    make_object_list = True
+class AllIncomeList(ListView):
+    model = BudgetIncome
+    total_inc = 0
 
     def get_queryset(self):
-        return BudgetIncome.objects.filter(calculator__user=self.request.user.pk)
+        self.total_inc = Calculator.objects.get(pk=self.request.user.pk).total_inc
+        return Calculator.objects.get(pk=self.request.user.pk).budgetincome_set.all()
 
 
-class IncomeMonth(MonthArchiveView):
-    date_field = 'date'
-    template_name = 'calculator/month_budget_income.html'
+class AllExpensesList(ListView):
+    model = BudgetExpenses
+    total_exp = 0
 
     def get_queryset(self):
-        return BudgetIncome.objects.filter(calculator__user=self.request.user.pk)
+        self.total_exp = Calculator.objects.get(pk=self.request.user.pk).total_exp
+        return Calculator.objects.get(pk=self.request.user.pk).budgetexpenses_set.all()

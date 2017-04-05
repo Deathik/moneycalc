@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}List of Income{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+{% if budgetincome_list %}
+ <table class="table table-responsive table-hover">
+    <caption>Income</caption>
+    <thead>
+        <tr>
+            <th>Value</th>
+            <th>Category</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    {% for budget in budgetincome_list %}
+        <tr>
+            <th>{{ budget.value }} </th>
+            <th>{{ budget.get_category_display }}</th>
+            <th>{{ budget.date }}</th>
+        </tr>
+    {% endfor %}
+    </table>
+    <p>Total: {{ view.total_inc }}</p>
+    {% else %}
+    <h2>You have no expenses yet</h2>
+    {% endif %}
+{% endblock %}
+    </div>
+</div>
