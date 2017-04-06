@@ -12,14 +12,20 @@ class Calculator(models.Model):
     total_exp = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def inc_budget(self, value):
-        self.budget += value
-        self.total_inc += value
-        return self.budget
+        if value < 0:
+            return None
+        else:
+            self.budget += value
+            self.total_inc += value
+            return self.budget
 
     def dec_budget(self, value):
-        self.budget -= value
-        self.total_exp += value
-        return self.budget
+        if value < 0:
+            return None
+        else:
+            self.budget -= value
+            self.total_exp += value
+            return self.budget
 
     def __str__(self):
         return "{}'s budget".format(self.user)

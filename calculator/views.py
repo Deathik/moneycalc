@@ -1,14 +1,12 @@
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import View, ListView
+from django.views.generic import View, ListView, DetailView
 
 from .models import Calculator, BudgetExpenses, BudgetIncome
 from .forms import ExpensesForm, IncomeForm
 
 
-@login_required
 def budget_edit(request):
     calc = Calculator.objects.get_or_create(user_id=request.user.pk)[0]
     expenses = BudgetExpenses.objects.filter(calculator=calc)[:5]
@@ -69,7 +67,7 @@ class BudgetExpensesView(View):
             return HttpResponseRedirect(reverse('calculator:budget_edit'))
 
 
-class AllIncomeList(ListView):
+class IncomeList(ListView):
     model = BudgetIncome
     total_inc = 0
 
@@ -78,10 +76,26 @@ class AllIncomeList(ListView):
         return Calculator.objects.get(pk=self.request.user.pk).budgetincome_set.all()
 
 
-class AllExpensesList(ListView):
+class ExpensesList(ListView):
     model = BudgetExpenses
     total_exp = 0
 
     def get_queryset(self):
         self.total_exp = Calculator.objects.get(pk=self.request.user.pk).total_exp
         return Calculator.objects.get(pk=self.request.user.pk).budgetexpenses_set.all()
+
+
+class IncomeDetailView(DetailView):
+    model = BudgetIncome
+
+    def get_object(self, queryset=None):
+        obj = get_object_or_404(Calculator.objects.get(user_id=self.request.user.pk).budgetincome_set, pk=self.kwargs['pk'])
+        return obj
+
+
+class ExpensesDetailView(DetailView):
+    model = BudgetExpenses
+
+    def get_object(self, queryset=None):
+        obj = get_object_or_404(Calculator.objects.get(user_id=self.request.user.pk).budgetexpenses_set, pk=self.kwargs['pk'])
+        return obj
