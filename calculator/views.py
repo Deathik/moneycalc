@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import View, ListView, DetailView
+from django.views.generic import View, ListView, DetailView, YearArchiveView, MonthArchiveView
 
 from .models import Calculator, BudgetExpenses, BudgetIncome
 from .forms import ExpensesForm, IncomeForm
@@ -99,3 +99,20 @@ class ExpensesDetailView(DetailView):
     def get_object(self, queryset=None):
         obj = get_object_or_404(Calculator.objects.get(user_id=self.request.user.pk).budgetexpenses_set, pk=self.kwargs['pk'])
         return obj
+
+
+class IncomeYearView(YearArchiveView):
+    model = BudgetIncome
+    date_field = 'date'
+    make_object_list = True
+
+    def get_queryset(self):
+        return BudgetIncome.objects.filter(calculator__user=self.request.user)
+
+
+class IncomeMonthView(MonthArchiveView):
+    model = BudgetIncome
+    date_field = 'date'
+
+    def get_queryset(self):
+        return BudgetIncome.objects.filter(calculator__user=self.request.user)

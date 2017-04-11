@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+
+{% block title %}Month Archive{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <ul>
+            {% for article in object_list %}
+                <li>{{ article.date|date:"F j, Y" }}: {{ article.value }}</li>
+            {% endfor %}
+        </ul>
+
+        <p>
+            {% if previous_month %}
+                Previous Month: {{ previous_month|date:"F Y" }}
+            {% endif %}
+            {% if next_month %}
+                Next Month: {{ next_month|date:"F Y" }}
+            {% endif %}
+        </p>
+    </div>
+</div>
+{% endblock %}

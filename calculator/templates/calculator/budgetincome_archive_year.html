@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Details for {{ year|date:"Y" }} year{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <ul>
+            {% for date in date_list %}
+                <li>{{ date|date:'F'}}</li>
+            {% endfor %}
+        </ul>
+
+        <div>
+            <h1>All Articles for {{ year|date:"Y" }}</h1>
+            <div id="test">
+            {% for object in object_list %}
+                {{ object.value }}<br>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

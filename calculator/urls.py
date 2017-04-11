@@ -12,4 +12,7 @@ urlpatterns = [
     url(r'^expenses/$', login_required(views.ExpensesList.as_view()), name='all_expenses_list'),
     url(r'^income/(?P<pk>[0-9]+)/$', login_required(views.IncomeDetailView.as_view()), name='income_detail'),
     url(r'^expenses/(?P<pk>[0-9]+)/$', login_required(views.ExpensesDetailView.as_view()), name='expenses_detail'),
+    url(r'^income/archive/(?P<year>[0-9]+)/$', views.IncomeYearView.as_view(), name='income_year'),
+    url(r'^income/archive/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/$',
+        views.IncomeMonthView.as_view(month_format='%m'), name='income_month'),
 ]
