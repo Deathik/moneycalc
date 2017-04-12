@@ -1,6 +1,6 @@
 {% extends 'base.html'%}
 
-{% block title %}Month Archive{% endblock %}
+{% block title %}{{ month|date:"F Y" }} budget{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -13,10 +13,10 @@
 
         <p>
             {% if previous_month %}
-                Previous Month: {{ previous_month|date:"F Y" }}
+                Previous Month: <a href="{% url "calculator:income_month" previous_month|date:'Y' previous_month|date:'m' %}">{{ previous_month|date:"F Y" }}</a>
             {% endif %}
             {% if next_month %}
-                Next Month: {{ next_month|date:"F Y" }}
+                Next Month: <a href="{% url "calculator:income_month" next_month|date:'Y' next_month|date:'m' %}">{{ next_month|date:"F Y" }}</a>
             {% endif %}
         </p>
     </div>

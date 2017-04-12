@@ -6,16 +6,24 @@
     <div class="row">
         <ul>
             {% for date in date_list %}
-                <li>{{ date|date:'F'}}</li>
+                <li><a href="{% url 'calculator:income_month' year|date:'Y' date|date:'m' %}">{{ date|date:'F'}}</a></li>
             {% endfor %}
         </ul>
-
-        <div>
-            <h1>All Articles for {{ year|date:"Y" }}</h1>
             <div id="test">
+            <script>
+            var arr = [];
             {% for object in object_list %}
-                {{ object.value }}<br>
+                arr.push({{ object.value }});
             {% endfor %}
+            var sum = 0;
+            for (var i = 0; i < arr.length; i++){sum += arr[i];}
+            var div = document.body.appendChild(document.createElement('div'));
+            var container = document.getElementsByClassName("container")[0];
+            container.appendChild(div);
+            div.setAttribute('class', "row");
+            var p = div.appendChild(document.createElement('p'));
+            p.innerHTML = "{{ year|date:'Y' }} year income: " + sum;
+            </script>
             </div>
         </div>
     </div>
