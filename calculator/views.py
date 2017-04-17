@@ -9,16 +9,14 @@ from .forms import ExpensesForm, IncomeForm
 
 def budget_edit(request):
     calc = Calculator.objects.get_or_create(user_id=request.user.pk)[0]
-    expenses = BudgetExpenses.objects.filter(calculator=calc)[:5]
-    income = BudgetIncome.objects.filter(calculator=calc)[:5]
     inc_form = IncomeForm()
     exp_form = ExpensesForm()
     return render(request, 'calculator/index.html', {
         'inc_form': inc_form,
         'exp_form': exp_form,
         'budget': calc.budget,
-        'expenses': expenses,
-        'income': income,
+        'expenses': calc.budgetexpenses_set.all()[:5],
+        'income': calc.budgetincome_set.all()[:5],
         'total_exp': calc.total_exp,
         'total_inc': calc.total_inc,
         })

@@ -9,7 +9,7 @@
                 <li><a href="{% url 'calculator:income_month' year|date:'Y' date|date:'m' %}">{{ date|date:'F'}}</a></li>
             {% endfor %}
         </ul>
-            <div id="test">
+        <div id="test">
             <script>
             var arr = [];
             {% for object in object_list %}
@@ -24,7 +24,6 @@
             var p = div.appendChild(document.createElement('p'));
             p.innerHTML = "{{ year|date:'Y' }} year income: " + sum;
             </script>
-            </div>
         </div>
     </div>
 </div>
