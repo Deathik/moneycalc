@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^', include('register.urls')),
     url(r'^', include('blog.urls')),
     url(r'^', include('social_django.urls', namespace='social')),
+    url(r'^api/', include('calculator.api.urls'))
 ]
