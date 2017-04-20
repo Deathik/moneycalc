@@ -9,8 +9,36 @@ from .forms import ExpensesForm, IncomeForm
 
 def budget_edit(request):
     calc = Calculator.objects.get_or_create(user_id=request.user.pk)[0]
-    inc_form = IncomeForm()
-    exp_form = ExpensesForm()
+    if request.method == 'POST':
+        inc_form = IncomeForm(request.POST)
+        exp_form = ExpensesForm(request.POST)
+        if inc_form.is_valid():
+            value = inc_form.cleaned_data.get('value')
+            changes = BudgetIncome(
+                calculator=calc,
+                value=value,
+                category=inc_form.cleaned_data.get('category'),
+            )
+            changes.save()
+            calc.inc_budget(value)
+            calc.save()
+            return HttpResponseRedirect(reverse('calculator:budget_edit'))
+        if exp_form.is_valid():
+            exp_form = ExpensesForm(request.POST)
+            if exp_form.is_valid():
+                value = exp_form.cleaned_data.get('value')
+                changes = BudgetExpenses(
+                    calculator=calc,
+                    value=value,
+                    category=exp_form.cleaned_data.get('category'), )
+                changes.save()
+                calc.dec_budget(value)
+                calc.save()
+                return HttpResponseRedirect(reverse('calculator:budget_edit'))
+    else:
+        inc_form = IncomeForm()
+        exp_form = ExpensesForm()
+
     return render(request, 'calculator/index.html', {
         'inc_form': inc_form,
         'exp_form': exp_form,
