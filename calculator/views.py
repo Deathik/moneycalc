@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import View, ListView, DetailView, YearArchiveView, MonthArchiveView
+from django.views.generic import ListView, DetailView, YearArchiveView, MonthArchiveView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from .models import Calculator, BudgetExpenses, BudgetIncome
 from .forms import ExpensesForm, IncomeForm
@@ -30,7 +32,8 @@ def budget_edit(request):
                 changes = BudgetExpenses(
                     calculator=calc,
                     value=value,
-                    category=exp_form.cleaned_data.get('category'), )
+                    category=exp_form.cleaned_data.get('category'),
+                )
                 changes.save()
                 calc.dec_budget(value)
                 calc.save()
@@ -48,49 +51,6 @@ def budget_edit(request):
         'total_exp': calc.total_exp,
         'total_inc': calc.total_inc,
         })
-
-
-class BudgetAddView(View):
-    def get(self, request):
-        return HttpResponseRedirect(reverse('calculator:budget_edit'))
-
-    def post(self, request):
-        calc = Calculator.objects.get_or_create(user_id=request.user.pk)[0]
-        inc_form = IncomeForm(request.POST)
-        if inc_form.is_valid():
-            value = inc_form.cleaned_data.get('value')
-            changes = BudgetIncome(
-                calculator=calc,
-                value=value,
-                category=inc_form.cleaned_data.get('category'),
-            )
-            changes.save()
-            calc.inc_budget(value)
-            calc.save()
-            return HttpResponseRedirect(reverse('calculator:budget_edit'))
-        else:
-            return HttpResponseRedirect(reverse('calculator:budget_edit'))
-
-
-class BudgetExpensesView(View):
-    def get(self, request):
-        return HttpResponseRedirect(reverse('calculator:budget_edit'))
-
-    def post(self, request):
-        calc = Calculator.objects.get_or_create(user_id=request.user.pk)[0]
-        exp_form = ExpensesForm(request.POST)
-        if exp_form.is_valid():
-            value = exp_form.cleaned_data.get('value')
-            changes = BudgetExpenses(
-                calculator=calc,
-                value=value,
-                category=exp_form.cleaned_data.get('category'), )
-            changes.save()
-            calc.dec_budget(value)
-            calc.save()
-            return HttpResponseRedirect(reverse('calculator:budget_edit'))
-        else:
-            return HttpResponseRedirect(reverse('calculator:budget_edit'))
 
 
 class IncomeList(ListView):
