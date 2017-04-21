@@ -9,6 +9,7 @@ from .models import Calculator, BudgetExpenses, BudgetIncome
 from .forms import ExpensesForm, IncomeForm
 
 
+@login_required
 def budget_edit(request):
     calc = Calculator.objects.get_or_create(user_id=request.user.pk)[0]
     if request.method == 'POST':
@@ -53,6 +54,7 @@ def budget_edit(request):
         })
 
 
+@method_decorator(login_required, name='dispatch')
 class IncomeList(ListView):
     model = BudgetIncome
     total_inc = 0
@@ -62,6 +64,7 @@ class IncomeList(ListView):
         return Calculator.objects.get(pk=self.request.user.pk).budgetincome_set.all()
 
 
+@method_decorator(login_required, name='dispatch')
 class ExpensesList(ListView):
     model = BudgetExpenses
     total_exp = 0
@@ -71,6 +74,7 @@ class ExpensesList(ListView):
         return Calculator.objects.get(pk=self.request.user.pk).budgetexpenses_set.all()
 
 
+@method_decorator(login_required, name='dispatch')
 class IncomeDetailView(DetailView):
     model = BudgetIncome
 
@@ -79,6 +83,7 @@ class IncomeDetailView(DetailView):
         return obj
 
 
+@method_decorator(login_required, name='dispatch')
 class ExpensesDetailView(DetailView):
     model = BudgetExpenses
 
@@ -87,6 +92,7 @@ class ExpensesDetailView(DetailView):
         return obj
 
 
+@method_decorator(login_required, name='dispatch')
 class IncomeYearView(YearArchiveView):
     model = BudgetIncome
     date_field = 'date'
@@ -96,6 +102,7 @@ class IncomeYearView(YearArchiveView):
         return BudgetIncome.objects.filter(calculator__user=self.request.user)
 
 
+@method_decorator(login_required, name='dispatch')
 class IncomeMonthView(MonthArchiveView):
     model = BudgetIncome
     date_field = 'date'

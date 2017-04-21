@@ -2,10 +2,12 @@
 {% load static %}
 
 {% block title %}Login{% endblock %}
-{% block static %}<link rel="stylesheet" type="text/css" href="{% static "register/css/bootstrap-social.css" %}" />{% endblock %}
+{% block static %}
+<link rel="stylesheet" type="text/css" href="{% static "register/css/bootstrap-social.css" %}" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+{% endblock %}
 
 {% block content %}
-
     <div align='center'>
         <div class="col-md-4 col-md-offset-4">
         {% if form.errors %}
@@ -43,5 +45,4 @@
         </a>
         </div>
     </div>
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 {% endblock %}
