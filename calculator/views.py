@@ -4,6 +4,8 @@ from django.urls import reverse
 from django.views.generic import ListView, DetailView, YearArchiveView, MonthArchiveView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.core.exceptions import ValidationError
+from django.contrib import messages
 
 from .models import Calculator, BudgetExpenses, BudgetIncome
 from .forms import ExpensesForm, IncomeForm
@@ -15,19 +17,18 @@ def budget_edit(request):
     if request.method == 'POST':
         inc_form = IncomeForm(request.POST)
         exp_form = ExpensesForm(request.POST)
-        if inc_form.is_valid():
-            value = inc_form.cleaned_data.get('value')
-            changes = BudgetIncome(
-                calculator=calc,
-                value=value,
-                category=inc_form.cleaned_data.get('category'),
-            )
-            changes.save()
-            calc.inc_budget(value)
-            calc.save()
-            return HttpResponseRedirect(reverse('calculator:budget_edit'))
-        if exp_form.is_valid():
-            exp_form = ExpensesForm(request.POST)
+        try:
+            if inc_form.is_valid():
+                value = inc_form.cleaned_data.get('value')
+                changes = BudgetIncome(
+                    calculator=calc,
+                    value=value,
+                    category=inc_form.cleaned_data.get('category'),
+                )
+                calc.inc_budget(value)
+                changes.save()
+                calc.save()
+                return HttpResponseRedirect(reverse('calculator:budget_edit'))
             if exp_form.is_valid():
                 value = exp_form.cleaned_data.get('value')
                 changes = BudgetExpenses(
@@ -35,10 +36,12 @@ def budget_edit(request):
                     value=value,
                     category=exp_form.cleaned_data.get('category'),
                 )
-                changes.save()
                 calc.dec_budget(value)
+                changes.save()
                 calc.save()
                 return HttpResponseRedirect(reverse('calculator:budget_edit'))
+        except ValidationError:
+            messages.add_message(request, messages.ERROR, "Value can't be negative or zero")
     else:
         inc_form = IncomeForm()
         exp_form = ExpensesForm()
