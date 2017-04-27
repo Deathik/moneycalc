@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
+from .validators import more_than_zero_validator
+
 
 class Calculator(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -28,7 +30,8 @@ class Calculator(models.Model):
 
 class BudgetAbstract(models.Model):
     calculator = models.ForeignKey(Calculator, on_delete=models.CASCADE)
-    value = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    value = models.DecimalField(max_digits=10, decimal_places=2, default=0,
+                                validators=[more_than_zero_validator])
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:

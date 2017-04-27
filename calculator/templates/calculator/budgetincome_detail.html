@@ -8,7 +8,11 @@
         <h1>Expenses detail</h1>
         <p>ID: {{ budgetincome.pk }}, {{ budgetincome.value }}</p>
 
-        {{ form }}
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit">
+        </form>
         <!--TODO Make sorting, add different charts-->
     </div>
 </div>

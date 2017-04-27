@@ -9,5 +9,10 @@
         <p>ID: {{ budgetexpenses.pk }}, {{ budgetexpenses.value }}</p>
     </div>
     <!--TODO Make sorting, add different charts-->
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" />
+    </form>
 </div>
 {% endblock %}
