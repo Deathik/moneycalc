@@ -44,12 +44,12 @@ class BudgetAbstract(models.Model):
 
 class BudgetExpenses(BudgetAbstract):
     category_choices = (
-            ('FD', 'Food'),
-            ('CL', 'Clothes'),
-            ('EN', 'Entertainment'),
-            ('BL', 'Bills'),
-            ('OT', 'Other'),
-            )
+        ('FD', 'Food'),
+        ('CL', 'Clothes'),
+        ('EN', 'Entertainment'),
+        ('BL', 'Bills'),
+        ('OT', 'Other'),
+    )
     category = models.CharField(max_length=2, choices=category_choices)
 
 

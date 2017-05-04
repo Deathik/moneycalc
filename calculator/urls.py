@@ -1,11 +1,12 @@
 from django.conf.urls import url
-from django.contrib.auth.decorators import login_required
 
 from . import views
 
 app_name = 'calculator'
 urlpatterns = [
     url(r'^$', views.budget_edit, name='budget_edit'),
+    url(r'^income_form/$', views.IncomeFormHandlerView.as_view(), name='income_form_handler'),
+    url(r'^expenses_form/$', views.ExpensesFormHandlerView.as_view(), name='expenses_form_handler'),
     url(r'^income/$', views.IncomeList.as_view(), name='all_income_list'),
     url(r'^expenses/$', views.ExpensesList.as_view(), name='all_expenses_list'),
     url(r'^income/detail/(?P<pk>[0-9]+)/$', views.IncomeUpdateView.as_view(), name='income_detail'),

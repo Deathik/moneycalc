@@ -17,44 +17,65 @@ def budget_edit(request):
     calc = Calculator.objects.select_related().get_or_create(user_id=request.user.pk)[0]
     total_inc = calc.budgetincome_set.all().aggregate(models.Sum(models.F('value')))['value__sum']
     total_exp = calc.budgetexpenses_set.all().aggregate(models.Sum(models.F('value')))['value__sum']
-    if request.method == 'POST':
-        inc_form = IncomeForm(request.POST)
-        exp_form = ExpensesForm(request.POST)
-
-        if inc_form.is_valid():
-            value = inc_form.cleaned_data.get('value')
-            changes = BudgetIncome(
-                calculator=calc,
-                value=value,
-                category=inc_form.cleaned_data.get('category'),
-            )
-            changes.save()
-            calc.save()
-            return HttpResponseRedirect(reverse('calculator:budget_edit'))
-
-        if exp_form.is_valid():
-            value = exp_form.cleaned_data.get('value')
-            changes = BudgetExpenses(
-                calculator=calc,
-                value=value,
-                category=exp_form.cleaned_data.get('category'),
-            )
-            changes.save()
-            calc.save()
-            return HttpResponseRedirect(reverse('calculator:budget_edit'))
-    else:
-        inc_form = IncomeForm()
-        exp_form = ExpensesForm()
 
     return render(request, 'calculator/index.html', {
-        'inc_form': inc_form,
-        'exp_form': exp_form,
+        'inc_form': IncomeForm(),
+        'exp_form': ExpensesForm(),
         'budget': total_inc - total_exp,
         'expenses': calc.budgetexpenses_set.all()[:5],
         'income': calc.budgetincome_set.all()[:5],
         'total_inc': total_inc,
         'total_exp': total_exp,
         })
+
+
+@method_decorator(login_required, name='dispatch')
+class IncomeFormHandlerView(generic.View):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponseRedirect(reverse('calculator:budget_edit'))
+
+    def post(self, request, *args, **kwargs):
+        calc = Calculator.objects.get(user_id=self.request.user.pk)
+        form = IncomeForm(self.request.POST)
+        if form.is_valid():
+            value = form.cleaned_data.get('value')
+            changes = BudgetIncome(
+                calculator=calc,
+                value=value,
+                category=form.cleaned_data.get('category'),
+            )
+            changes.save()
+            calc.save()
+            return HttpResponseRedirect(reverse('calculator:budget_edit'))
+        else:
+            messages.add_message(request, messages.ERROR, form.errors)
+            return HttpResponseRedirect(reverse('calculator:budget_edit'))
+
+
+@method_decorator(login_required, name='dispatch')
+class ExpensesFormHandlerView(generic.View):
+    
+    def get(self, request):
+        return HttpResponseRedirect(reverse('calculator:budget_edit'))
+
+    def post(self, request, *args, **kwargs):
+        calc = Calculator.objects.get(user_id=self.request.user.pk)
+        form = ExpensesForm(self.request.POST)
+    
+        if form.is_valid():
+            value = form.cleaned_data.get('value')
+            changes = BudgetExpenses(
+                calculator=calc,
+                value=value,
+                category=form.cleaned_data.get('category'),
+            )
+            changes.save()
+            calc.save()
+            return HttpResponseRedirect(reverse('calculator:budget_edit'))
+        else:
+            messages.add_message(request, messages.ERROR, form.errors)
+            return HttpResponseRedirect(reverse('calculator:budget_edit'))
 
 
 @method_decorator(login_required, name='dispatch')

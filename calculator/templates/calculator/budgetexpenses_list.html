@@ -12,6 +12,7 @@
                 <th>Category</th>
                 <th>Date</th>
                 <th>Details</th>
+                <th>Delete</th>
             </tr>
         </thead>
         {% for budget in budgetexpenses_list %}
@@ -19,7 +20,8 @@
                 <th>{{ budget.value }} </th>
                 <th>{{ budget.get_category_display }}</th>
                 <th>{{ budget.date }}</th>
-                <th><a class="btn btn-info" href="{% url 'calculator:expenses_detail' budget.pk %}">Detail</a></th>
+                <th><a class="btn btn-info" href="{% url 'calculator:expenses_detail' budget.pk %}">Details</a></th>
+                <th><a class="btn btn-danger" href="{% url 'calculator:expenses_delete' budget.pk %}">Delete</a></th>
             </tr>
         {% endfor %}
     </table>
