@@ -25,11 +25,11 @@
             </tr>
         {% endfor %}
     </table>
-    <p>Total: {{ total_exp }}</p>
+    <h3>Total: {{ total_exp }}</h3>
     {% else %}
-    <h2>You have no expenses yet</h2>
+    <h3>You have no expenses yet</h3>
     {% endif %}
-
     </div>
+{% include 'calculator/paginator.html' %}
 </div>
 {% endblock %}

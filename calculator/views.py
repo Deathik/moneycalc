@@ -81,6 +81,7 @@ class ExpensesFormHandlerView(generic.View):
 @method_decorator(login_required, name='dispatch')
 class IncomeList(generic.ListView):
     model = BudgetIncome
+    paginate_by = 10
 
     def get_queryset(self):
         return Calculator.objects.get(pk=self.request.user.pk).budgetincome_set.all()
@@ -96,6 +97,7 @@ class IncomeList(generic.ListView):
 @method_decorator(login_required, name='dispatch')
 class ExpensesList(generic.ListView):
     model = BudgetExpenses
+    paginate_by = 10
 
     def get_queryset(self):
         return Calculator.objects.get(pk=self.request.user.pk).budgetexpenses_set.all()
@@ -140,7 +142,7 @@ class ExpensesUpdateView(generic.UpdateView):
         return obj
 
 
-#TODO make mot let another user able to delete budgets
+@method_decorator(login_required, name='dispatch')
 class IncomeDeleteView(generic.DeleteView):
     model = BudgetIncome
     template_name = 'calculator/income_delete.html'
@@ -148,14 +150,20 @@ class IncomeDeleteView(generic.DeleteView):
     def get_success_url(self):
         return reverse('calculator:budget_edit')
 
+    def get_object(self, queryset=None):
+        return BudgetIncome.objects.filter(calculator__user=self.request.user).get(pk=self.kwargs['pk'])
 
-#TODO make mot let another user able to delete budgets
+
+@method_decorator(login_required, name='dispatch')
 class ExpensesDeleteView(generic.DeleteView):
     model = BudgetExpenses
     template_name = 'calculator/expenses_delete.html'
 
     def get_success_url(self):
         return reverse('calculator:budget_edit')
+
+    def get_object(self, queryset=None):
+        return BudgetExpenses.objects.filter(calculator__user=self.request.user).get(pk=self.kwargs['pk'])
 
 
 @method_decorator(login_required, name='dispatch')
