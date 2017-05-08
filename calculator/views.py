@@ -145,7 +145,7 @@ class ExpensesUpdateView(generic.UpdateView):
 @method_decorator(login_required, name='dispatch')
 class IncomeDeleteView(generic.DeleteView):
     model = BudgetIncome
-    template_name = 'calculator/income_delete.html'
+    template_name = 'calculator/budget_delete.html'
 
     def get_success_url(self):
         return reverse('calculator:budget_edit')
@@ -157,7 +157,7 @@ class IncomeDeleteView(generic.DeleteView):
 @method_decorator(login_required, name='dispatch')
 class ExpensesDeleteView(generic.DeleteView):
     model = BudgetExpenses
-    template_name = 'calculator/expenses_delete.html'
+    template_name = 'calculator/budget_delete.html'
 
     def get_success_url(self):
         return reverse('calculator:budget_edit')
