@@ -31,5 +31,22 @@
         {% endif %}
 
     </div>
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger">{{ message }}</div>
+            {% endif %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <div class="row">
+        <form action="{% url "feedback:form_handler" %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input class="btn btn-primary" type="submit" style="margin-top: 10px;">
+        </form>
+    </div>
 </div>
 {% endblock %}
