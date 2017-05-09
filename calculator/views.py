@@ -82,6 +82,7 @@ class ExpensesFormHandlerView(generic.View):
 class IncomeList(generic.ListView):
     model = BudgetIncome
     paginate_by = 10
+    paginate_orphans = 3
 
     def get_queryset(self):
         return Calculator.objects.get(pk=self.request.user.pk).budgetincome_set.all()
@@ -98,6 +99,7 @@ class IncomeList(generic.ListView):
 class ExpensesList(generic.ListView):
     model = BudgetExpenses
     paginate_by = 10
+    paginate_orphans = 3
 
     def get_queryset(self):
         return Calculator.objects.get(pk=self.request.user.pk).budgetexpenses_set.all()

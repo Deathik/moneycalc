@@ -3,6 +3,16 @@
 {% block title %}MyBudget{% endblock %}
 {% block static %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous">
+    </script>
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -79,8 +89,7 @@
                 <th>{{ inc.get_category_display }}</th>
                 <th>{{ inc.date }}</th>
                 <th><a class="btn btn-info" href="{% url 'calculator:income_detail' inc.pk %}">Detail</a></th>
-                <th><a class="btn btn-danger" href="{% url 'calculator:income_delete' inc.pk %}">Delete</a></th>
-            </tr>
+                <th><a class="btn btn-danger"  href="{% url 'calculator:income_delete' inc.pk %}">Delete</a></th>            </tr>
         {% endfor %}
     </table>
     {% else %}
@@ -145,22 +154,5 @@
         </script>
     </div>
 </div>
-</div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
 </div>
 {% endblock %}
