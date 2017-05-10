@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^', include('blog.urls')),
     url(r'^feedback/', include('feedback.urls')),
     url(r'^', include('social_django.urls', namespace='social')),
-    url(r'^api/', include('api_v1.urls')),
+    #url(r'^api/', include('api_v1.urls')),
 ]
