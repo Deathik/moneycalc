@@ -62,3 +62,5 @@ target/
 
 #Settings ignore
 moneycalc/settings.py
+moneycalc.sublime-project
+moneycalc.sublime-workspace
