@@ -4,7 +4,6 @@ from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.db import models
 
@@ -15,8 +14,8 @@ from .forms import ExpensesForm, IncomeForm
 @login_required
 def budget_edit(request):
     calc = Calculator.objects.select_related().get_or_create(user_id=request.user.pk)[0]
-    total_inc = calc.budgetincome_set.all().aggregate(models.Sum(models.F('value')))['value__sum']
-    total_exp = calc.budgetexpenses_set.all().aggregate(models.Sum(models.F('value')))['value__sum']
+    total_inc = calc.budgetincome_set.all().aggregate(models.Sum(models.F('value')))['value__sum'] or 0
+    total_exp = calc.budgetexpenses_set.all().aggregate(models.Sum(models.F('value')))['value__sum'] or 0
 
     return render(request, 'calculator/index.html', {
         'inc_form': IncomeForm(),
@@ -179,6 +178,7 @@ class IncomeYearView(generic.YearArchiveView):
 
 
 @method_decorator(login_required, name='dispatch')
+
 class IncomeMonthView(generic.MonthArchiveView):
     model = BudgetIncome
     date_field = 'date'
