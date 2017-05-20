@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
@@ -13,7 +13,7 @@ from .forms import ExpensesForm, IncomeForm
 
 @login_required
 def budget_edit(request):
-    calc = Calculator.objects.select_related().get_or_create(user_id=request.user.pk)[0]
+    calc = Calculator.objects.prefetch_related().get(user_id=request.user.pk)
     total_inc = calc.budgetincome_set.all().aggregate(models.Sum(models.F('value')))['value__sum'] or 0
     total_exp = calc.budgetexpenses_set.all().aggregate(models.Sum(models.F('value')))['value__sum'] or 0
 
@@ -25,7 +25,7 @@ def budget_edit(request):
         'income': calc.budgetincome_set.all()[:5],
         'total_inc': total_inc,
         'total_exp': total_exp,
-        })
+    })
 
 
 @method_decorator(login_required, name='dispatch')
@@ -54,14 +54,14 @@ class IncomeFormHandlerView(generic.View):
 
 @method_decorator(login_required, name='dispatch')
 class ExpensesFormHandlerView(generic.View):
-    
+
     def get(self, request):
         return HttpResponseRedirect(reverse('calculator:budget_edit'))
 
     def post(self, request, *args, **kwargs):
         calc = Calculator.objects.get(user_id=self.request.user.pk)
         form = ExpensesForm(self.request.POST)
-    
+
         if form.is_valid():
             value = form.cleaned_data.get('value')
             changes = BudgetExpenses(
@@ -178,7 +178,6 @@ class IncomeYearView(generic.YearArchiveView):
 
 
 @method_decorator(login_required, name='dispatch')
-
 class IncomeMonthView(generic.MonthArchiveView):
     model = BudgetIncome
     date_field = 'date'

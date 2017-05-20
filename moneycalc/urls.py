@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+#import debug_toolbar
+
 from django.conf.urls import url, include
 from django.contrib import admin
 
@@ -23,5 +25,6 @@ urlpatterns = [
     url(r'^', include('blog.urls')),
     url(r'^feedback/', include('feedback.urls')),
     url(r'^', include('social_django.urls', namespace='social')),
+    #url(r'^debug/', include(debug_toolbar.urls))
     #url(r'^api/', include('api_v1.urls')),
 ]

@@ -60,7 +60,9 @@ target/
 #PyCharm folder
 .idea
 
-#Settings ignore
+#Django settings
 moneycalc/settings.py
+
+#Sublime project settings
 moneycalc.sublime-project
 moneycalc.sublime-workspace
