@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Moneycalc - the application for tracking your pocket budget{% endblock title %}
+
+{% block content %}
+  <style>
+    .navbar-invisible {
+      background: none;
+      border: none;
+      padding: 16px 0;
+    }
+    .navbar {
+      transition: all ease 0.3s;
+    }
+    .jumbotron {
+      height: 400px;
+      background: url('{% static "img/piggy-bank.svg" %}') center right no-repeat;
+      background-size: contain;
+    }
+    .box .glyphicon {
+      font-size: 3rem;
+    }
+  </style>
+  <script>
+    var navbar = document.getElementsByClassName("navbar")[0]
+    navbar.classList.add("navbar-fixed-top", "navbar-invisible");
+    window.addEventListener('scroll', () => {
+      var scrolled = window.pageYOffset || document.documentElement.scrollTop;
+      if(scrolled > 0) {
+        navbar.classList.remove("navbar-invisible");
+      } else {
+        navbar.classList.add("navbar-invisible",);
+      }
+    })
+  </script>
+  <div class="jumbotron">
+    <div class="container-fluid">
+      <h1>Moneycalc</h1>
+      <p>The application for tracking your pocket budget</p>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row text-center">
+      <div class="col-md-3 col-md-offset-1">
+        <div class="box">
+            <i class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></i>
+        </div>
+        <h3>You can check how much money you spent while shopping this day/week/month/year</h3>
+      </div>
+      <div class="col-md-3">
+        <div class="box">
+            <i class="glyphicon glyphicon-ok" aria-hidden="true"></i>
+        </div>
+        <h3>Your helper that always with you in your pocket</h3>
+      </div>
+      <div class="col-md-3">
+        <div class="box">
+            <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>
+        </div>
+        <h3>Control your finances and tweak it in real time</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container">
+        <h2 class="text-center">Please, contact us if you have any troubles with our app</h2>
+        <form action="{% url 'feedback:form_handler' %}" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button class="btn btn-primary" type="submit">Send feedback</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

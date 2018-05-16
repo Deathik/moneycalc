@@ -25,7 +25,7 @@ SECRET_KEY = '#2k*l4b(6e2m$8^b9-^jyt3t0q7hxgv0yc)bey7nx=^=g1izv2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -131,6 +131,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS  = [os.path.join(BASE_DIR, 'static'),]
 
 #Gooogle OAuth2 credentials
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = SECRET_DATA['google_oauth']['key']

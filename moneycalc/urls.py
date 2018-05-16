@@ -16,15 +16,19 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
+from django.views.generic import TemplateView
+
+from feedback.forms import FeedbackForm
 
 urlpatterns = [
+    url(r'^$', TemplateView.as_view(extra_context={"form": FeedbackForm()}, template_name="index.html"), name="index"),
     url(r'^admin/', admin.site.urls),
     url(r'^calculator/', include('calculator.urls')),
     url(r'^', include('register.urls')),
-    url(r'^', include('blog.urls')),
+    url(r'^blog/', include('blog.urls')),
     url(r'^feedback/', include('feedback.urls')),
     url(r'^', include('social_django.urls', namespace='social')),
-    #url(r'^api/', include('api_v1.urls')),
+    # url(r'^api/', include('api_v1.urls')),
 ]
 
 if settings.DEBUG:
