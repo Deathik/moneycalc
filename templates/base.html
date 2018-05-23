@@ -13,7 +13,9 @@
             <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href='{% url 'index' %}'>Calculator</a>
+                <button id="menu_btn" class="btn btn-default navbar-btn navbar-right" style="display: none;"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></button>
             </div>
+            
                 <ul class="nav navbar-nav">
                     <li><a href='{% url "calculator:budget_edit" %}'>My Calculator <span class='glyphicon glyphicon-piggy-bank'></span></a></li>
                     <li><a href="{% url 'calculator:all_income_list' %}">Income</a></li>
@@ -27,6 +29,7 @@
                     <li><a href='{% url "registration:login" %}'>Log in <span class='glyphicon glyphicon-log-in'></span></a></li>
                     {% endif %}
                 </ul>
+                
             </div>
         </nav>
         {% block content %}
@@ -38,5 +41,6 @@
             </div>
         </div>
         {% endblock %}
+        {% block javascript-bottom %}{% endblock javascript-bottom %}
     </body>
 </html>

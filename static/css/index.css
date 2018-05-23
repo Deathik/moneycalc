@@ -1,0 +1,19 @@
+.navbar-invisible {
+    background: none;
+    border: none;
+    padding: 16px 0;
+  }
+  .navbar {
+    transition: all ease 0.3s;
+  }
+  .jumbotron {
+    height: 400px;
+    background: url('/static/img/piggy-bank.svg') center right no-repeat;
+    background-size: contain;
+  }
+  .box .glyphicon {
+    font-size: 5rem;
+  }
+  .nav {
+    transition: all .3s ease;
+  }
