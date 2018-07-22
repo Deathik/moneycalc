@@ -69,6 +69,7 @@ moneycalc.sublime-workspace
 
 #Sqlite database ignore
 database.sqlite3
+db.sqlite3
 
 #Ignore VS Code settings
 .vscode/
