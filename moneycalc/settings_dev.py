@@ -134,5 +134,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS  = [os.path.join(BASE_DIR, 'static'),]
 
 #Gooogle OAuth2 credentials
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = SECRET_DATA['google_oauth']['key']
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = SECRET_DATA['google_oauth']['secret']
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = SECRET_DATA['google_oauth']['key']
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = SECRET_DATA['google_oauth']['secret']
