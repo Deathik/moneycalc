@@ -13,8 +13,8 @@ import json
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-with open(os.path.join(BASE_DIR, 'secrets.json')) as file:
-    SECRET_DATA = json.load(file)
+# with open(os.path.join(BASE_DIR, 'secrets.json')) as file:
+#     SECRET_DATA = json.load(file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
