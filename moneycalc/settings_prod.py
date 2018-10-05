@@ -18,3 +18,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_SECRET')
