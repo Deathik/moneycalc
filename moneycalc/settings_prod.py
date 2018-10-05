@@ -4,7 +4,7 @@ from moneycalc.settings_dev import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['moneycalc.pp.ua']
+ALLOWED_HOSTS = ['moneycalc.pp.ua', 'moneycalc.herokuapp.com']
 
 SECRET_KEY = os.getenv('SECRET_KEY')
 
