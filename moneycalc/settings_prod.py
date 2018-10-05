@@ -1,5 +1,7 @@
 import os
 
+import sentry_sdk
+
 from moneycalc.settings_dev import *
 
 DEBUG = False
@@ -23,3 +25,5 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_KEY')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_SECRET')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+sentry_sdk.init("https://8a94e87f028d4ebb88532ecb03124bb3@sentry.io/1295318")
